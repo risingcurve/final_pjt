@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static './css/search.css' %}">
+  <br>
+  <div class="container">
+    <h1 class="title-search">통합 검색창</h1>
+    <br>
+    <div class="d-flex flex-colum justify-content-center">
+      <form action="{% url 'movies:search' %}" method='POST'>
+        {% csrf_token %}
+        <div class="row">
+          <input type="search" class="form-control me-2" name="search" placeholder='아이디 or 영화 제목 검색'>
+          <button type="submit" class="btn btn-dark">검색</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+  {% if searched %}
+  <h1 class="title-userlist">유저 목록</h1>
+  {% if not users %}
+    <br>
+    <p style='text-align: center;'>검색 결과가 없습니다.</p>
+  {% else %}
+  
+  <div class="container">
+    <div class="row">
+      {% for user in users %}
+      <a href="{% url 'accounts:profile' user %}" class="username">
+        {{ user.username }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+  {% endif %}
+  <br>
+  <br>
+  <h1 class="title-movielist">영화 목록</h1>
+  <br>
+  {% if not movies %}
+    <p class="nosearch">검색 결과가 없습니다.</p>
+  {% else %}
+
+    <div class="contain d-flex flex-wrap justify-content-center" id='total'>
+      {% for movie in movies %}
+      <a href="{% url 'movies:detail' movie.pk %}">
+        <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" class="rounded main_img" alt="...">
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endif %}
+{% endblock content %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+</script>
+{% endblock script %}

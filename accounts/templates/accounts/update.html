@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<br>
+<link rel="stylesheet" href="{% static './css/update.css' %}">
+<div class="out-layer">
+  <br>
+  <form class="update-div" action="{% url 'accounts:update' %}" method="POST">
+    <h1 class="title-update">회원정보수정</h1>
+    <br>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <div class="button-update">
+      <button type="submit" class="btn btn-dark">수정</button>
+      <a href="{% url 'accounts:profile' user %}" class="btn btn-outline-dark" style="font-family: 'Hanna', sans-serif;">뒤로가기</a>
+    </div>
+  </form>
+</div>  
+{% endblock content %}
